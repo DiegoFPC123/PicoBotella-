@@ -2,8 +2,19 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Picobotella" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorError">@color/error_red</item>
     </style>
 
     <style name="Theme.Picobotella" parent="Base.Theme.Picobotella" />
+
+    <style name="LoginTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/login_field_stroke_selector</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="hintTextColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="boxStrokeErrorColor">@color/error_red</item>
+        <item name="errorIconTint">@color/error_red</item>
+        <item name="errorTextColor">@color/error_red</item>
+    </style>
 </resources>

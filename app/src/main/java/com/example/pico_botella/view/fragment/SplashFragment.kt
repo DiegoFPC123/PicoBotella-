@@ -39,7 +39,7 @@ class SplashFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             delay(5000)
-            navigateToHome()
+            navigateToLogin()
         }
     }
 
@@ -58,9 +58,9 @@ class SplashFragment : Fragment() {
         }
     }
 
-    private fun navigateToHome() {
+    private fun navigateToLogin() {
         if (isAdded) {
-            findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+            findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
         }
     }
 
