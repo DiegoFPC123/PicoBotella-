@@ -9,4 +9,5 @@
     <color name="toolbar_background">#CC1A1A1A</color>
     <color name="orange_title">#FF3D00</color>
     <color name="error_red">#FF0000</color>
+    <color name="gray_text">#9EA1A1</color>
 </resources>
