@@ -1,4 +1,4 @@
-package com.example.pico_botella.ui.challenges
+package com.example.pico_botella.view.fragment
 
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -14,13 +14,13 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.example.pico_botella.R
 import com.example.pico_botella.databinding.DialogAddChallengeBinding
+import com.example.pico_botella.viewmodel.ChallengesViewModel
 
 class AddChallengeDialogFragment : DialogFragment() {
 
     private var _binding: DialogAddChallengeBinding? = null
     private val binding get() = _binding!!
 
-    // Usamos activityViewModels para compartir el ViewModel con el fragmento principal
     private val viewModel: ChallengesViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -41,7 +41,6 @@ class AddChallengeDialogFragment : DialogFragment() {
     }
 
     private fun setupDialogBehavior() {
-        // CRITERIO 7: No cerrar al tocar fuera ni el fondo oscuro
         isCancelable = false
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.setLayout(
@@ -51,7 +50,6 @@ class AddChallengeDialogFragment : DialogFragment() {
     }
 
     private fun setupValidation() {
-        // CRITERIO 5: Estado inicial deshabilitado
         updateSaveButton(binding.etChallenge.text.toString())
 
         binding.etChallenge.addTextChangedListener(object : TextWatcher {
@@ -69,12 +67,10 @@ class AddChallengeDialogFragment : DialogFragment() {
         binding.btnSave.isClickable = isValid
 
         if (isValid) {
-            // CRITERIO 5: Habilitado -> Color naranja
             binding.btnSave.backgroundTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(requireContext(), R.color.orange_pico)
             )
         } else {
-            // CRITERIO 5: Deshabilitado -> Color gris
             binding.btnSave.backgroundTintList = ColorStateList.valueOf(
                 Color.parseColor("#E0E0E0")
             )
@@ -89,7 +85,6 @@ class AddChallengeDialogFragment : DialogFragment() {
         binding.btnSave.setOnClickListener {
             val description = binding.etChallenge.text.toString().trim()
             if (description.isNotEmpty()) {
-                // CRITERIO 6: Guardar en Room y cerrar
                 viewModel.addChallenge(description)
                 dismiss()
             }

@@ -1,11 +1,10 @@
-package com.example.pico_botella.data.database
+package com.example.pico_botella.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.pico_botella.data.dao.ChallengeDao
-import com.example.pico_botella.data.entity.Challenge
+import com.example.pico_botella.model.Challenge
 
 @Database(entities = [Challenge::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {

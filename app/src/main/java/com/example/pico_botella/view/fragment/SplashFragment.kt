@@ -1,4 +1,4 @@
-package com.example.pico_botella.ui.splash
+package com.example.pico_botella.view.fragment
 
 import android.graphics.LinearGradient
 import android.graphics.Shader
@@ -16,10 +16,6 @@ import com.example.pico_botella.databinding.FragmentSplashBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-/**
- * SplashFragment: Pantalla de inicio de la aplicación.
- * Muestra una animación de botella y navega al Home tras 5 segundos.
- */
 class SplashFragment : Fragment() {
 
     private var _binding: FragmentSplashBinding? = null
@@ -38,11 +34,9 @@ class SplashFragment : Fragment() {
 
         applyPremiumGradient()
 
-        // 1. Iniciar animación de la botella
         val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.bottle_animation)
         binding.ivBottle.startAnimation(animation)
 
-        // 2. Temporizador de 5 segundos usando corrutinas (lifecycleScope)
         viewLifecycleOwner.lifecycleScope.launch {
             delay(5000)
             navigateToHome()
@@ -52,7 +46,6 @@ class SplashFragment : Fragment() {
     private fun applyPremiumGradient() {
         binding.tvAppName.post {
             val paint = binding.tvAppName.paint
-            val width = paint.measureText(binding.tvAppName.text.toString())
             val textShader: Shader = LinearGradient(
                 0f, 0f, 0f, binding.tvAppName.height.toFloat(),
                 intArrayOf(

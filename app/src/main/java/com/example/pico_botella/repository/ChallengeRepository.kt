@@ -1,7 +1,7 @@
-package com.example.pico_botella.data.repository
+package com.example.pico_botella.repository
 
-import com.example.pico_botella.data.dao.ChallengeDao
-import com.example.pico_botella.data.entity.Challenge
+import com.example.pico_botella.data.ChallengeDao
+import com.example.pico_botella.model.Challenge
 import kotlinx.coroutines.flow.Flow
 
 class ChallengeRepository(private val challengeDao: ChallengeDao) {

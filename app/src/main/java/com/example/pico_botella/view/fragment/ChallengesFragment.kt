@@ -1,4 +1,4 @@
-package com.example.pico_botella.ui.challenges
+package com.example.pico_botella.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.pico_botella.databinding.FragmentChallengesBinding
 import com.example.pico_botella.databinding.DialogDeleteChallengeBinding
 import com.example.pico_botella.databinding.DialogEditarRetoBinding
-import com.example.pico_botella.data.entity.Challenge
+import com.example.pico_botella.model.Challenge
+import com.example.pico_botella.view.adapter.ChallengesAdapter
+import com.example.pico_botella.viewmodel.ChallengesViewModel
 
 class ChallengesFragment : Fragment() {
 
@@ -71,7 +73,7 @@ class ChallengesFragment : Fragment() {
         val dialogBinding = DialogEditarRetoBinding.inflate(layoutInflater)
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogBinding.root)
-            .setCancelable(false) // CRITERIO 7: El diálogo NO desaparece al tocar fuera
+            .setCancelable(false)
             .create()
 
         dialogBinding.etReto.setText(challenge.description)
@@ -97,7 +99,7 @@ class ChallengesFragment : Fragment() {
         val dialogBinding = DialogDeleteChallengeBinding.inflate(layoutInflater)
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogBinding.root)
-            .setCancelable(false) // No desaparece al tocar fuera
+            .setCancelable(false)
             .create()
 
         dialogBinding.tvChallengeDescription.text = challenge.description

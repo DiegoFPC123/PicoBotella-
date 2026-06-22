@@ -1,4 +1,4 @@
-package com.example.pico_botella.ui.challenges
+package com.example.pico_botella.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pico_botella.databinding.ItemChallengeBinding
-import com.example.pico_botella.data.entity.Challenge
+import com.example.pico_botella.model.Challenge
 
 class ChallengesAdapter(
     private val onEditClick: (Challenge) -> Unit,

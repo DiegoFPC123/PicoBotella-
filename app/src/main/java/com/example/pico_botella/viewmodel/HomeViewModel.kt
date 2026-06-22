@@ -1,16 +1,16 @@
-package com.example.pico_botella.ui.home
+package com.example.pico_botella.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.pico_botella.data.database.AppDatabase
-import com.example.pico_botella.data.entity.Challenge
-import com.example.pico_botella.data.network.Pokemon
-import com.example.pico_botella.data.network.PokemonApiService
-import com.example.pico_botella.data.repository.ChallengeRepository
-import com.example.pico_botella.data.repository.PokemonRepository
+import com.example.pico_botella.data.AppDatabase
+import com.example.pico_botella.model.Challenge
+import com.example.pico_botella.model.Pokemon
+import com.example.pico_botella.webservice.ApiService
+import com.example.pico_botella.repository.ChallengeRepository
+import com.example.pico_botella.repository.PokemonRepository
 import kotlinx.coroutines.launch
 
 data class ChallengeResult(val challenge: Challenge, val pokemon: Pokemon)
@@ -28,14 +28,13 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> get() = _error
 
-    // Criterio 4: Mantener el estado de la última rotación
     private var _lastAngle = 0f
     val lastAngle: Float get() = _lastAngle
 
     init {
         val dao = AppDatabase.getDatabase(application).challengeDao()
         challengeRepository = ChallengeRepository(dao)
-        pokemonRepository = PokemonRepository(PokemonApiService.create())
+        pokemonRepository = PokemonRepository(ApiService.create())
     }
 
     fun updateAngle(newAngle: Float) {

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.pico_botella.ui.splash.SplashFragment"
+        android:name="com.example.pico_botella.view.fragment.SplashFragment"
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.pico_botella.ui.home.HomeFragment"
+        android:name="com.example.pico_botella.view.fragment.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -32,13 +32,13 @@
 
     <fragment
         android:id="@+id/instructionsFragment"
-        android:name="com.example.pico_botella.ui.instructions.InstructionsFragment"
+        android:name="com.example.pico_botella.view.fragment.InstructionsFragment"
         android:label="InstructionsFragment"
         tools:layout="@layout/fragment_instructions" />
 
     <fragment
         android:id="@+id/challengesFragment"
-        android:name="com.example.pico_botella.ui.challenges.ChallengesFragment"
+        android:name="com.example.pico_botella.view.fragment.ChallengesFragment"
         android:label="ChallengesFragment"
         tools:layout="@layout/fragment_challenges" />
 </navigation>

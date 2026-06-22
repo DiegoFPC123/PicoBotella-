@@ -1,4 +1,4 @@
-package com.example.pico_botella.data.dao
+package com.example.pico_botella.data
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.pico_botella.data.entity.Challenge
+import com.example.pico_botella.model.Challenge
 import kotlinx.coroutines.flow.Flow
 
 @Dao

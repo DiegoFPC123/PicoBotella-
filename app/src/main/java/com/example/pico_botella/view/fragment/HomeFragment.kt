@@ -1,4 +1,4 @@
-package com.example.pico_botella.ui.home
+package com.example.pico_botella.view.fragment
 
 import android.animation.Animator
 import android.content.Intent
@@ -22,6 +22,8 @@ import com.bumptech.glide.Glide
 import com.example.pico_botella.R
 import com.example.pico_botella.databinding.FragmentHomeBinding
 import com.example.pico_botella.databinding.DialogRandomChallengeBinding
+import com.example.pico_botella.viewmodel.HomeViewModel
+import com.example.pico_botella.viewmodel.ChallengeResult
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -37,7 +39,6 @@ class HomeFragment : Fragment() {
     private var bgMediaPlayer: MediaPlayer? = null
     private var spinMediaPlayer: MediaPlayer? = null
 
-    // Variables para sincronizar el diálogo con el conteo (C6 y C7)
     private var pendingResult: ChallengeResult? = null
     private var isCountdownFinished = false
 
@@ -55,7 +56,6 @@ class HomeFragment : Fragment() {
         setupClicks()
         setupAnimations()
         
-        // Criterio 4: Mantener el estado de la última rotación al recrear la vista
         binding.ivBottle.rotation = viewModel.lastAngle
     }
 
@@ -69,7 +69,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // Criterio 6 y 7 (Implementados previamente): Observamos el resultado del reto
         viewModel.challengeResult.observe(viewLifecycleOwner) { result ->
             result?.let {
                 pendingResult = it
@@ -115,7 +114,6 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnStar.setOnClickListener {
-            // C1: Abrir el enlace de Nequi en Google Play como simulación
             val url = "https://play.google.com/store/apps/details?id=com.nequi.MobileApp&hl=es_419&gl=es"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             try {
@@ -126,7 +124,6 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnShare.setOnClickListener {
-            // C1 y C2: Compartir con el eslogan y URL requeridos
             shareApp()
         }
     }
@@ -153,30 +150,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun startBottleTurn() {
-        // Criterio 7: El botón desaparece mientras la partida está en proceso
         binding.vCircle.clearAnimation()
         binding.btnPressMeContainer.isVisible = false
         
-        // Criterio 8: Pausar audio de fondo si está activo
         pauseBackgroundMusic()
 
-        // SOLUCIÓN AL PROBLEMA DE LENTITUD:
-        // Reiniciamos la rotación visual de la botella al ángulo normalizado (0-360)
-        // que tenemos guardado en el ViewModel. Sin esto, en el segundo giro la botella
-        // ya tiene una rotación acumulada muy alta y la animación "cree" que solo debe
-        // moverse un poquito, haciéndolo muy lento.
         binding.ivBottle.rotation = viewModel.lastAngle
 
-        // Giro aleatorio (duración entre 3 y 5 seg)
         val randomDuration = Random.nextLong(3000, 5001)
         val randomExtraRotation = Random.nextFloat() * 360f
         val fullSpins = (5..8).random() * 360f 
         val targetRotation = viewModel.lastAngle + fullSpins + randomExtraRotation
 
-        // Criterio 2: Iniciar sonido de botella girando
         playSpinSound()
 
-        // Usamos ViewPropertyAnimator para mayor compatibilidad y asegurar el giro
         binding.ivBottle.animate()
             .rotation(targetRotation)
             .setDuration(randomDuration)
@@ -188,19 +175,13 @@ class HomeFragment : Fragment() {
                     stopSpinSound()
                 }
                 override fun onAnimationEnd(animation: Animator) {
-                    // Criterio 2: Detener sonido inmediatamente al terminar el giro
                     stopSpinSound()
-                    
-                    // Criterio 4: Guardar ángulo final para el próximo giro (normalizado a 0-360)
                     viewModel.updateAngle(targetRotation)
-                    
-                    // Criterio 5: Iniciar cuenta regresiva
                     startCountdown()
                 }
             })
             .start()
         
-        // Criterio 6/7: Solicitar datos mientras gira
         viewModel.fetchRandomChallengeAndPokemon()
     }
 
@@ -208,11 +189,9 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
             isCountdownFinished = false
             binding.tvCountdown.isVisible = true
-            // Criterio 5: Contador de 3 a 0 en el centro
             for (i in 3 downTo 0) {
                 binding.tvCountdown.text = i.toString()
                 if (i == 0) {
-                    // C6 y C7: Indicar que el conteo terminó para mostrar el diálogo
                     isCountdownFinished = true
                     checkAndShowDialog()
                 }
@@ -229,10 +208,8 @@ class HomeFragment : Fragment() {
             .setCancelable(false)
             .create()
 
-        // Criterio 6: Mostrar el texto del reto aleatorio
         dialogBinding.tvChallenge.text = result.challenge.description
 
-        // Mostrar imagen del Pokemon
         val imageUrl = result.pokemon.img.replace("http://", "https://")
         Glide.with(this)
             .load(imageUrl)
@@ -240,11 +217,9 @@ class HomeFragment : Fragment() {
             .error(R.drawable.ic_launcher_foreground)
             .into(dialogBinding.ivPokemon)
 
-        // Botón "Cerrar" del diálogo
         dialogBinding.btnClose.setOnClickListener {
             dialog.dismiss()
             
-            // Criterio 7 y 8: La partida termina, reaparece botón y se reanuda música
             binding.btnPressMeContainer.isVisible = true
             binding.vCircle.startAnimation(blinkAnimation)
             

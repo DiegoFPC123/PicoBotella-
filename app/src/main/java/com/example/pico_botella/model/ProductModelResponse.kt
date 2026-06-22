@@ -1,8 +1,8 @@
-package com.example.pico_botella.data.network
+package com.example.pico_botella.model
 
 import com.google.gson.annotations.SerializedName
 
-data class PokemonResponse(
+data class ProductModelResponse(
     @SerializedName("pokemon")
     val pokemon: List<Pokemon>
 )

@@ -1,4 +1,4 @@
-package com.example.pico_botella.data.entity
+package com.example.pico_botella.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
