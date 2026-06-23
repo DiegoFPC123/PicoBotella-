@@ -18,6 +18,9 @@ class ChallengesViewModel(application: Application) : AndroidViewModel(applicati
         val dao = AppDatabase.getDatabase(application).challengeDao()
         repository = ChallengeRepository(dao)
         allChallenges = repository.allChallenges.asLiveData()
+        
+        // Iniciamos la sincronización en tiempo real con Firestore
+        repository.startFirestoreSync(viewModelScope)
     }
 
     fun addChallenge(description: String) {
