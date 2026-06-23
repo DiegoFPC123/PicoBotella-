@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1010261094781",
+    "project_id": "equipocinco-91316",
+    "storage_bucket": "equipocinco-91316.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1010261094781:android:b33f64b9a93a3c25f15c14",
+        "android_client_info": {
+          "package_name": "com.example.pico_botella"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_nlfoSyOCORQU8ci98gbiXs78DGjnHdc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

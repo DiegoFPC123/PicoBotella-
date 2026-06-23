@@ -1,6 +1,7 @@
 package com.example.pico_botella.view.fragment
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
@@ -9,16 +10,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.pico_botella.R
 import com.example.pico_botella.databinding.FragmentLoginBinding
+import com.example.pico_botella.model.UserRequest
+import com.example.pico_botella.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,8 +34,33 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupListeners()
+        setupObservers()
+        checkSession()
+    }
+
+    private fun checkSession() {
+        val sharedPref = requireActivity().getSharedPreferences("PicoBotellaPrefs", Context.MODE_PRIVATE)
+        val email = sharedPref.getString("email", null)
+        loginViewModel.sesion(email) { isLogged ->
+            if (isLogged) {
+                binding.root.visibility = View.INVISIBLE
+                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+            }
+        }
+    }
+
+    private fun setupObservers() {
+        loginViewModel.isRegister.observe(viewLifecycleOwner) { userResponse ->
+            if (userResponse.isRegister) {
+                requireActivity().getSharedPreferences("PicoBotellaPrefs", Context.MODE_PRIVATE)
+                    .edit().putString("email", userResponse.email).apply()
+                Toast.makeText(requireContext(), userResponse.message, Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+            } else {
+                Toast.makeText(requireContext(), "Error en el registro", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setupListeners() {
@@ -44,24 +73,26 @@ class LoginFragment : Fragment() {
         }
 
         binding.etEmail.addTextChangedListener(textWatcher)
-        binding.etPassword.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val password = s.toString()
-                if (password.isNotEmpty() && password.length < 6) {
-                    binding.tilPassword.error = "Mínimo 6 dígitos"
-                    binding.tilPassword.isErrorEnabled = true
-                } else {
-                    binding.tilPassword.error = null
-                    binding.tilPassword.isErrorEnabled = false
-                }
-                updateButtonsState()
-            }
-            override fun afterTextChanged(s: Editable?) {}
-        })
+        binding.etPassword.addTextChangedListener(textWatcher)
 
         binding.btnLogin.setOnClickListener {
-            performLogin()
+            val email = binding.etEmail.text.toString()
+            val password = binding.etPassword.text.toString()
+            loginViewModel.loginUser(email, password) { isLogin ->
+                if (isLogin) {
+                    requireActivity().getSharedPreferences("PicoBotellaPrefs", Context.MODE_PRIVATE)
+                        .edit().putString("email", email).apply()
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                } else {
+                    Toast.makeText(requireContext(), "Login incorrecto", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        binding.tvRegister.setOnClickListener {
+            val email = binding.etEmail.text.toString()
+            val password = binding.etPassword.text.toString()
+            loginViewModel.registerUser(UserRequest(email, password))
         }
     }
 
@@ -74,37 +105,11 @@ class LoginFragment : Fragment() {
         binding.tvRegister.isEnabled = isEnabled
 
         if (isEnabled) {
-            // Login Button enabled state
-            binding.btnLogin.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            binding.btnLogin.setTypeface(null, Typeface.BOLD)
-
-            // Register Button enabled state
-            binding.tvRegister.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.tvRegister.setTextColor(Color.WHITE)
             binding.tvRegister.setTypeface(null, Typeface.BOLD)
         } else {
-            // Login Button disabled state (using default selector color if defined, or setting manually)
-            // Color #80FFFFFF was used in button_text_selector
-            binding.btnLogin.setTypeface(null, Typeface.NORMAL)
-
-            // Register Button disabled state
-            binding.tvRegister.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_text))
+            binding.tvRegister.setTextColor(Color.parseColor("#9EA1A1"))
             binding.tvRegister.setTypeface(null, Typeface.NORMAL)
-        }
-    }
-
-    private fun performLogin() {
-        val email = binding.etEmail.text.toString().trim()
-        val password = binding.etPassword.text.toString().trim()
-
-        val sharedPref = requireActivity().getSharedPreferences("PicoBotellaPrefs", Context.MODE_PRIVATE)
-        val registeredPassword = sharedPref.getString(email, null)
-
-        if (registeredPassword != null && registeredPassword == password) {
-            // Login successful
-            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-        } else {
-            // Login failed
-            Toast.makeText(requireContext(), "Login incorrecto", Toast.LENGTH_SHORT).show()
         }
     }
 

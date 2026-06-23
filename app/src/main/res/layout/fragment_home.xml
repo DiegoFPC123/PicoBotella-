@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_madera"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".view.fragment.HomeFragment">
 
     <LinearLayout
         android:id="@+id/customToolbar"
@@ -66,6 +66,15 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Share"
             android:src="@drawable/ic_share" />
+
+        <ImageButton
+            android:id="@+id/btnLogout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Logout"
+            android:src="@drawable/ic_logout" />
 
     </LinearLayout>
 

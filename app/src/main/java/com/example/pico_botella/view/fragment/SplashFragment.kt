@@ -1,5 +1,6 @@
 package com.example.pico_botella.view.fragment
 
+import android.content.Context
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.os.Bundle
@@ -39,7 +40,7 @@ class SplashFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             delay(5000)
-            navigateToLogin()
+            navigateToNextScreen()
         }
     }
 
@@ -58,9 +59,19 @@ class SplashFragment : Fragment() {
         }
     }
 
-    private fun navigateToLogin() {
+    private fun navigateToNextScreen() {
         if (isAdded) {
-            findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+            // C1: Verificar si hay una sesión activa guardada en SharedPreferences
+            val sharedPref = requireActivity().getSharedPreferences("PicoBotellaPrefs", Context.MODE_PRIVATE)
+            val isLoggedIn = sharedPref.getBoolean("isLoggedIn", false)
+
+            if (isLoggedIn) {
+                // Si la sesión existe, saltar el login e ir directo al Home
+                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+            } else {
+                // Si no hay sesión, ir a la pantalla de Login
+                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+            }
         }
     }
 

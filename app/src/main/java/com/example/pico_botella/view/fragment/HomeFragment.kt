@@ -1,6 +1,7 @@
 package com.example.pico_botella.view.fragment
 
 import android.animation.Animator
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.media.MediaPlayer
@@ -24,6 +25,7 @@ import com.example.pico_botella.databinding.FragmentHomeBinding
 import com.example.pico_botella.databinding.DialogRandomChallengeBinding
 import com.example.pico_botella.viewmodel.HomeViewModel
 import com.example.pico_botella.viewmodel.ChallengeResult
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -125,6 +127,14 @@ class HomeFragment : Fragment() {
 
         binding.btnShare.setOnClickListener {
             shareApp()
+        }
+
+        // PASO 7 — Cerrar sesión
+        binding.btnLogout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            requireActivity().getSharedPreferences("PicoBotellaPrefs", Context.MODE_PRIVATE)
+                .edit().clear().apply()
+            findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
         }
     }
 
