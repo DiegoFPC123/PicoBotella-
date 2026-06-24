@@ -13,6 +13,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -57,8 +58,18 @@ class HomeFragment : Fragment() {
         setupObservers()
         setupClicks()
         setupAnimations()
-        
+        handleBackPress()
+
         binding.ivBottle.rotation = viewModel.lastAngle
+    }
+
+    // C9 - Configurar el botón de atrás para salir de la app en lugar de volver al login
+    private fun handleBackPress() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finish()
+            }
+        })
     }
 
     private fun setupObservers() {
