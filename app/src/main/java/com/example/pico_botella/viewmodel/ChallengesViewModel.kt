@@ -1,24 +1,22 @@
 package com.example.pico_botella.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.pico_botella.data.AppDatabase
 import com.example.pico_botella.model.Challenge
 import com.example.pico_botella.repository.ChallengeRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ChallengesViewModel(application: Application) : AndroidViewModel(application) {
-    
+@HiltViewModel
+class ChallengesViewModel @Inject constructor(
     private val repository: ChallengeRepository
-    val allChallenges: androidx.lifecycle.LiveData<List<Challenge>>
+) : ViewModel() {
+    
+    val allChallenges = repository.allChallenges.asLiveData()
 
     init {
-        val dao = AppDatabase.getDatabase(application).challengeDao()
-        repository = ChallengeRepository(dao)
-        allChallenges = repository.allChallenges.asLiveData()
-        
         // Iniciamos la sincronización en tiempo real con Firestore
         repository.startFirestoreSync(viewModelScope)
     }

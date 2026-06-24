@@ -17,7 +17,9 @@ import com.example.pico_botella.R
 import com.example.pico_botella.databinding.FragmentLoginBinding
 import com.example.pico_botella.model.UserRequest
 import com.example.pico_botella.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null

@@ -96,7 +96,6 @@
         android:text="Registrarse"
         android:textColor="#9EA1A1"
         android:textSize="18sp"
-        android:clickable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

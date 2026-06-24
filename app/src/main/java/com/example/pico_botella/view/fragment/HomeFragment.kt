@@ -27,10 +27,12 @@ import com.example.pico_botella.databinding.DialogRandomChallengeBinding
 import com.example.pico_botella.viewmodel.HomeViewModel
 import com.example.pico_botella.viewmodel.ChallengeResult
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null

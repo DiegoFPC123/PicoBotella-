@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.pico_botella.R
 import com.example.pico_botella.databinding.FragmentInstructionsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class InstructionsFragment : Fragment() {
 
     private var _binding: FragmentInstructionsBinding? = null

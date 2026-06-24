@@ -14,7 +14,6 @@
         <item name="hintTextColor">@color/white</item>
         <item name="android:textColorHint">@color/white</item>
         <item name="boxStrokeErrorColor">@color/error_red</item>
-        <item name="errorIconTint">@color/error_red</item>
         <item name="errorTextColor">@color/error_red</item>
     </style>
 </resources>

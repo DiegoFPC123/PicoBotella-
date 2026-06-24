@@ -15,7 +15,9 @@ import androidx.fragment.app.activityViewModels
 import com.example.pico_botella.R
 import com.example.pico_botella.databinding.DialogAddChallengeBinding
 import com.example.pico_botella.viewmodel.ChallengesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddChallengeDialogFragment : DialogFragment() {
 
     private var _binding: DialogAddChallengeBinding? = null

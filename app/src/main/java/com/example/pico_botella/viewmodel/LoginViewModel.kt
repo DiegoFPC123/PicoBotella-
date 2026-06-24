@@ -7,10 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.pico_botella.model.UserRequest
 import com.example.pico_botella.model.UserResponse
 import com.example.pico_botella.repository.LoginRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
-    private val repository = LoginRepository()
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val repository: LoginRepository
+) : ViewModel() {
 
     private val _isRegister = MutableLiveData<UserResponse>()
     val isRegister: LiveData<UserResponse> = _isRegister

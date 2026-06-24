@@ -14,7 +14,9 @@ import com.example.pico_botella.databinding.DialogEditarRetoBinding
 import com.example.pico_botella.model.Challenge
 import com.example.pico_botella.view.adapter.ChallengesAdapter
 import com.example.pico_botella.viewmodel.ChallengesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChallengesFragment : Fragment() {
 
     private var _binding: FragmentChallengesBinding? = null
