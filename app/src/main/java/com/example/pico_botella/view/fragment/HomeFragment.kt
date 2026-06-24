@@ -98,24 +98,46 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // C8 - Función de extensión para la animación sutil de touch
+    private fun View.setAnimateClickListener(action: () -> Unit) {
+        setOnClickListener {
+            this.animate()
+                .scaleX(0.85f)
+                .scaleY(0.85f)
+                .setDuration(100)
+                .withEndAction {
+                    this.animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(100)
+                        .withEndAction {
+                            action()
+                        }
+                        .start()
+                }
+                .start()
+        }
+    }
+
     private fun setupClicks() {
         binding.btnPressMeContainer.setOnClickListener {
             startBottleTurn()
         }
 
-        binding.btnPower.setOnClickListener {
+        // C8 - Implementación de animación para los 6 botones del toolbar
+        binding.btnPower.setAnimateClickListener {
             viewModel.toggleAudio()
         }
 
-        binding.btnInfo.setOnClickListener {
+        binding.btnInfo.setAnimateClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_instructionsFragment)
         }
 
-        binding.btnAdd.setOnClickListener {
+        binding.btnAdd.setAnimateClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_challengesFragment)
         }
 
-        binding.btnStar.setOnClickListener {
+        binding.btnStar.setAnimateClickListener {
             val url = "https://play.google.com/store/apps/details?id=com.nequi.MobileApp&hl=es_419&gl=es"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             try {
@@ -125,12 +147,12 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.btnShare.setOnClickListener {
+        binding.btnShare.setAnimateClickListener {
             shareApp()
         }
 
-        // PASO 7 — Cerrar sesión
-        binding.btnLogout.setOnClickListener {
+        // C7 - Cerrar sesión y navegar al LoginFragment con animación (C8)
+        binding.btnLogout.setAnimateClickListener {
             FirebaseAuth.getInstance().signOut()
             requireActivity().getSharedPreferences("PicoBotellaPrefs", Context.MODE_PRIVATE)
                 .edit().clear().apply()
