@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class LoginRepository {
-    private val firebaseAuth = FirebaseAuth.getInstance()
+    private val firebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     suspend fun registerUser(userRequest: UserRequest, userResponse: (UserResponse) -> Unit) {
         withContext(Dispatchers.IO) {
