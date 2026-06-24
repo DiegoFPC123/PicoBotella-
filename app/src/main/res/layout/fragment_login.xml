@@ -43,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
+                android:maxLength="40"
                 android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -56,13 +57,16 @@
             app:hintTextColor="@color/white"
             app:boxStrokeColor="@color/white"
             app:endIconMode="password_toggle"
-            app:endIconTint="@color/white">
+            app:endIconTint="@color/white"
+            app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:inputType="numberPassword"
+                android:digits="0123456789"
+                android:maxLength="10"
                 android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 

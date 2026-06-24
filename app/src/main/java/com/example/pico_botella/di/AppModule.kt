@@ -41,7 +41,7 @@ object AppModule {
     @Provides
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://raw.githubusercontent.com/")
+            .baseUrl("https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
